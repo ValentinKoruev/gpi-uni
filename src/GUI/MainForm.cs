@@ -27,7 +27,6 @@ namespace Draw
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -435,20 +434,19 @@ namespace Draw
 			if (e.Control && e.KeyCode == Keys.C)
 			{
 				dialogProcessor.CopySelection();
+				UpdateStatusBar("Последно действие: Копиране на селекция");
 				viewPort.Invalidate(); 
 			}
 			else if (e.KeyCode == Keys.Delete) 
 			{
 				dialogProcessor.DeleteSelection();
+				UpdateStatusBar("Последно действие: Изтриване на селекция");
 				viewPort.Invalidate();
 			}
 		}
 
 		private void SaveImageModelButton_Click(object sender, EventArgs e)
 		{
-
-			//dialogProcessor.SaveDrawing("drawing.bin");
-
 			SaveFileDialog saveFileDialog = new SaveFileDialog()
 			{
 				Title = "Load Save File",
@@ -461,11 +459,14 @@ namespace Draw
 				try
 				{
 					dialogProcessor.SaveDrawing(saveFileDialog.FileName);
-					MessageBox.Show("File saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+					UpdateStatusBar("Последно действие: Запазване на модел");
+					MessageBox.Show("Файлът беше запазен успешно!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				catch(Exception ex)
 				{
-					MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Грешка при зареждане: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}	
 		}
@@ -485,12 +486,13 @@ namespace Draw
 				{
 					dialogProcessor.LoadDrawing(openFileDialog.FileName);
 
+					UpdateStatusBar("Последно действие: Зареждане на модел");
 					viewPort.Invalidate();
-					MessageBox.Show("File loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show("Файлът беше успешно зареден!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Грешка при зареждане: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 		}
@@ -500,6 +502,11 @@ namespace Draw
 			dialogProcessor.ShapeList.Clear();
 			dialogProcessor.Selection.Clear();
 			viewPort.Invalidate();
+		}
+
+		private void viewPort_Load(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

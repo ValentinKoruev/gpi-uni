@@ -121,4 +121,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7492910.png" />
+  </ItemGroup>
 </Project>
