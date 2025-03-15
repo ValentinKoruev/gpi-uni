@@ -56,9 +56,6 @@ namespace Draw
 
 				grfx.Transform = m;
 
-				float scaledWidth = Rectangle.Width * Scale;
-				float scaledHeight = Rectangle.Height * Scale;
-
 				grfx.FillRectangle(new SolidBrush(Color.FromArgb(Transparency, FillColor)),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 				grfx.DrawRectangle(new Pen(StrokeColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height) ;
 				grfx.ResetTransform();

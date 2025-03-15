@@ -147,6 +147,20 @@ namespace Draw
 			viewPort.Invalidate();
 		}
 
+		private void DrawTriangleButton_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.AddRandomTriangle();
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Рисуване на триъгълник");
+		}
+
+		private void DrawCircleButton_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.AddRandomCircle();
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Рисуване на кръг");
+		}
+
 		private void changeFillColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if(colorDialog1.ShowDialog() == DialogResult.OK)
@@ -502,11 +516,40 @@ namespace Draw
 			dialogProcessor.ShapeList.Clear();
 			dialogProcessor.Selection.Clear();
 			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Изтриване на всички елементи");
 		}
 
 		private void viewPort_Load(object sender, EventArgs e)
 		{
 
+		}
+
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string helpText = "[Markup tool]\n" +
+				"Left Click - Move selected elements\n" +
+				"Right Click - Select element\n" +
+				"[Tranform]\n" +
+				"Ctrl + Scroll - Resize\n" +
+				"Shift + Scroll - Rotate\n" +
+				"Ctrl + Shift + Scroll - Transparency\n" +
+				"[Element manipulation]\n" +
+				"Ctrl + C - Copy selection\n" +
+				"Delete - Delete selection\n";
+			MessageBox.Show(helpText);
+		}
+
+		private void clearSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.Selection.Clear();
+			UpdateStatusBar("Последно действие: Деселектиране на всички елементи");
+		}
+
+		private void CopySelectionButton_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.CopySelection();
+			UpdateStatusBar("Последно действие: Копиране на селекция");
+			viewPort.Invalidate();
 		}
 	}
 }

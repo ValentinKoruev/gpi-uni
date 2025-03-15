@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using Draw.src.Model;
 namespace Draw
 {
 	/// <summary>
@@ -101,6 +102,38 @@ namespace Draw
 
 			ShapeList.AddLast(rect);
 		}
+		/// <summary>
+		/// Добавя примитив - триъгълник на произволно място върху клиентската област.
+		/// </summary>
+		public void AddRandomTriangle()
+		{
+			Random rnd = new Random();
+			int x = rnd.Next(100, 1000);
+			int y = rnd.Next(100, 600);
+
+			TriangleShape triangle = new TriangleShape(new Rectangle(x, y, 100, 100));
+			triangle.FillColor = Color.White;
+			triangle.StrokeColor = Color.Black;
+
+			ShapeList.AddLast(triangle);
+		}
+
+		/// <summary>
+		/// Добавя примитив - триъгълник на произволно място върху клиентската област.
+		/// </summary>
+		public void AddRandomCircle()
+		{
+			Random rnd = new Random();
+			int x = rnd.Next(100, 1000);
+			int y = rnd.Next(100, 600);
+
+			EllipseShape circle = new EllipseShape(new Rectangle(x, y, 100, 100));
+			circle.FillColor = Color.White;
+			circle.StrokeColor = Color.Black;
+
+			ShapeList.AddLast(circle);
+		}
+
 
 		/// <summary>
 		/// Проверява дали дадена точка е в елемента.
