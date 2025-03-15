@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 
 namespace Draw
 {
 	/// <summary>
 	/// Базовия клас на примитивите, който съдържа общите характеристики на примитивите.
 	/// </summary>
+	[Serializable]
 	public abstract class Shape
 	{
 		#region Constructors
@@ -69,20 +71,37 @@ namespace Draw
 		/// <summary>
 		/// Цвят на елемента.
 		/// </summary>
-		private Color fillColor;		
+		private Color fillColor;
+		[XmlIgnore]
 		public virtual Color FillColor {
 			get { return fillColor; }
 			set { fillColor = value; }
 		}
 
+		[XmlElement("FillColor")]
+		public int FillColorAsArgb
+		{
+			get { return FillColor.ToArgb(); }
+			set { FillColor = Color.FromArgb(value); }
+		}
+
+
 		/// <summary>
 		/// Цвят на щрихта.
 		/// </summary>
 		private Color strokeColor;
+		[XmlIgnore]
 		public virtual Color StrokeColor
 		{
 			get { return strokeColor; }
 			set { strokeColor = value; }
+		}
+
+		[XmlElement("StrokeColor")]
+		public int StrokeColorAsArgb
+		{
+			get { return StrokeColor.ToArgb(); }
+			set { StrokeColor = Color.FromArgb(value); }
 		}
 
 		/// <summary>
@@ -119,12 +138,12 @@ namespace Draw
 		#endregion
 
 
-			/// <summary>
-			/// Проверка дали точка point принадлежи на елемента.
-			/// </summary>
-			/// <param name="point">Точка</param>
-			/// <returns>Връща true, ако точката принадлежи на елемента и
-			/// false, ако не пренадлежи</returns>
+		/// <summary>
+		/// Проверка дали точка point принадлежи на елемента.
+		/// </summary>
+		/// <param name="point">Точка</param>
+		/// <returns>Връща true, ако точката принадлежи на елемента и
+		/// false, ако не пренадлежи</returns>
 		public virtual bool Contains(PointF point)
 		{
 			return Rectangle.Contains(point.X, point.Y);	

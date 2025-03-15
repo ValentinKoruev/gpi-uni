@@ -3,6 +3,9 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 namespace Draw
 {
 	/// <summary>
@@ -311,6 +314,85 @@ namespace Draw
 				ShapeList.Remove(item);
 			}
 			selection.Clear();
+		}
+
+		public enum ModelFileType
+		{
+			BIN,
+			XML,
+			JSON,
+			UNSUPPORTED
+		}
+
+		public ModelFileType FindFileType(string filePath)
+		{
+			ModelFileType type = ModelFileType.UNSUPPORTED;
+			switch(Path.GetExtension(filePath))
+			{
+				case ".bin":
+				{
+					type = ModelFileType.BIN;
+					break;
+				}
+				case ".xml":
+				{
+					type = ModelFileType.XML;
+					break;
+				}
+				case ".json":
+				{
+					type = ModelFileType.JSON;
+					break;
+				}
+			}
+			return type;
+		}
+
+		public void SaveDrawing(string filePath)
+		{
+			switch(FindFileType(filePath))
+			{
+				case ModelFileType.BIN:
+				{
+					using (FileStream fs = new FileStream(filePath, FileMode.Create))
+					{
+						BinaryFormatter formatter = new BinaryFormatter();
+						formatter.Serialize(fs, ShapeList);
+					}
+					break;
+				}
+				case ModelFileType.XML:
+				{
+					string xml = SerializeXml(ShapeList.ToArray());
+
+					File.WriteAllText(filePath, xml);
+					break;
+				}
+				default:
+				{
+					throw new Exception("File type not supported.");
+				}
+			}
+		}
+
+		public void LoadDrawing(string filePath) 
+		{
+		}
+
+		public static string SerializeXml(object obj)
+		{
+			Type[] extraTypes = new Type[]
+			{
+				typeof(RectangleShape),
+				typeof(EllipseShape),
+				typeof(GroupShape)
+			};
+			XmlSerializer xmlSerializer = new XmlSerializer(obj.GetType(), extraTypes);
+			using (StringWriter stringWriter = new StringWriter())
+			{
+				xmlSerializer.Serialize(stringWriter, obj);
+				return stringWriter.ToString();
+			}
 		}
 	}
 }

@@ -62,16 +62,21 @@
 			this.statusBar = new System.Windows.Forms.StatusStrip();
 			this.currentStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.speedMenu = new System.Windows.Forms.ToolStrip();
+			this.pickUpSpeedButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.drawRectangleSpeedButton = new System.Windows.Forms.ToolStripButton();
 			this.DrawSquareButton = new System.Windows.Forms.ToolStripButton();
 			this.DrawEllipseButton = new System.Windows.Forms.ToolStripButton();
-			this.pickUpSpeedButton = new System.Windows.Forms.ToolStripButton();
-			this.deleteSelectionButton = new System.Windows.Forms.ToolStripButton();
-			this.bringToBackButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.bringToFrontButton = new System.Windows.Forms.ToolStripButton();
+			this.bringToBackButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.deleteSelectionButton = new System.Windows.Forms.ToolStripButton();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.colorDialog2 = new System.Windows.Forms.ColorDialog();
+			this.SaveImageModelButton = new System.Windows.Forms.ToolStripButton();
 			this.viewPort = new Draw.DoubleBufferedPanel();
+			this.LoadImageModelButton = new System.Windows.Forms.ToolStripButton();
 			this.mainMenu.SuspendLayout();
 			this.statusBar.SuspendLayout();
 			this.speedMenu.SuspendLayout();
@@ -147,28 +152,28 @@
 			// scale_2
 			// 
 			this.scale_2.Name = "scale_2";
-			this.scale_2.Size = new System.Drawing.Size(180, 22);
+			this.scale_2.Size = new System.Drawing.Size(95, 22);
 			this.scale_2.Text = "2x";
 			this.scale_2.Click += new System.EventHandler(this.scale_2_Click);
 			// 
 			// scale_1_5
 			// 
 			this.scale_1_5.Name = "scale_1_5";
-			this.scale_1_5.Size = new System.Drawing.Size(180, 22);
+			this.scale_1_5.Size = new System.Drawing.Size(95, 22);
 			this.scale_1_5.Text = "1.5x";
 			this.scale_1_5.Click += new System.EventHandler(this.scale_1_5_Click);
 			// 
 			// scale_1
 			// 
 			this.scale_1.Name = "scale_1";
-			this.scale_1.Size = new System.Drawing.Size(180, 22);
+			this.scale_1.Size = new System.Drawing.Size(95, 22);
 			this.scale_1.Text = "1x";
 			this.scale_1.Click += new System.EventHandler(this.scale_1_Click);
 			// 
 			// scale_0_5
 			// 
 			this.scale_0_5.Name = "scale_0_5";
-			this.scale_0_5.Size = new System.Drawing.Size(180, 22);
+			this.scale_0_5.Size = new System.Drawing.Size(95, 22);
 			this.scale_0_5.Text = "0.5x";
 			this.scale_0_5.Click += new System.EventHandler(this.scale_0_5_Click);
 			// 
@@ -335,18 +340,38 @@
 			// speedMenu
 			// 
 			this.speedMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pickUpSpeedButton,
+            this.toolStripSeparator3,
             this.drawRectangleSpeedButton,
             this.DrawSquareButton,
             this.DrawEllipseButton,
-            this.pickUpSpeedButton,
-            this.deleteSelectionButton,
+            this.toolStripSeparator1,
+            this.bringToFrontButton,
             this.bringToBackButton,
-            this.bringToFrontButton});
+            this.toolStripSeparator2,
+            this.deleteSelectionButton,
+            this.SaveImageModelButton,
+            this.LoadImageModelButton});
 			this.speedMenu.Location = new System.Drawing.Point(0, 24);
 			this.speedMenu.Name = "speedMenu";
 			this.speedMenu.Size = new System.Drawing.Size(693, 25);
 			this.speedMenu.TabIndex = 3;
 			this.speedMenu.Text = "toolStrip1";
+			// 
+			// pickUpSpeedButton
+			// 
+			this.pickUpSpeedButton.CheckOnClick = true;
+			this.pickUpSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.pickUpSpeedButton.Image = ((System.Drawing.Image)(resources.GetObject("pickUpSpeedButton.Image")));
+			this.pickUpSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.pickUpSpeedButton.Name = "pickUpSpeedButton";
+			this.pickUpSpeedButton.Size = new System.Drawing.Size(23, 22);
+			this.pickUpSpeedButton.Text = "toolStripButton1";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			// 
 			// drawRectangleSpeedButton
 			// 
@@ -379,25 +404,20 @@
 			this.DrawEllipseButton.ToolTipText = "Draw ellipse button";
 			this.DrawEllipseButton.Click += new System.EventHandler(this.DrawEllipseButton_Click);
 			// 
-			// pickUpSpeedButton
+			// toolStripSeparator1
 			// 
-			this.pickUpSpeedButton.CheckOnClick = true;
-			this.pickUpSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.pickUpSpeedButton.Image = ((System.Drawing.Image)(resources.GetObject("pickUpSpeedButton.Image")));
-			this.pickUpSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.pickUpSpeedButton.Name = "pickUpSpeedButton";
-			this.pickUpSpeedButton.Size = new System.Drawing.Size(23, 22);
-			this.pickUpSpeedButton.Text = "toolStripButton1";
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// deleteSelectionButton
+			// bringToFrontButton
 			// 
-			this.deleteSelectionButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.deleteSelectionButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteSelectionButton.Image")));
-			this.deleteSelectionButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.deleteSelectionButton.Name = "deleteSelectionButton";
-			this.deleteSelectionButton.Size = new System.Drawing.Size(23, 22);
-			this.deleteSelectionButton.Text = "Delete selected elements";
-			this.deleteSelectionButton.Click += new System.EventHandler(this.deleteSelectionButton_Click);
+			this.bringToFrontButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.bringToFrontButton.Image = ((System.Drawing.Image)(resources.GetObject("bringToFrontButton.Image")));
+			this.bringToFrontButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.bringToFrontButton.Name = "bringToFrontButton";
+			this.bringToFrontButton.Size = new System.Drawing.Size(23, 22);
+			this.bringToFrontButton.Text = "Bring to front button";
+			this.bringToFrontButton.Click += new System.EventHandler(this.bringToFrontButton_Click);
 			// 
 			// bringToBackButton
 			// 
@@ -410,15 +430,30 @@
 			this.bringToBackButton.ToolTipText = "Bring to back button";
 			this.bringToBackButton.Click += new System.EventHandler(this.bringToBackButton_Click);
 			// 
-			// bringToFrontButton
+			// toolStripSeparator2
 			// 
-			this.bringToFrontButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.bringToFrontButton.Image = ((System.Drawing.Image)(resources.GetObject("bringToFrontButton.Image")));
-			this.bringToFrontButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.bringToFrontButton.Name = "bringToFrontButton";
-			this.bringToFrontButton.Size = new System.Drawing.Size(23, 22);
-			this.bringToFrontButton.Text = "Bring to front button";
-			this.bringToFrontButton.Click += new System.EventHandler(this.bringToFrontButton_Click);
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// deleteSelectionButton
+			// 
+			this.deleteSelectionButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.deleteSelectionButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteSelectionButton.Image")));
+			this.deleteSelectionButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.deleteSelectionButton.Name = "deleteSelectionButton";
+			this.deleteSelectionButton.Size = new System.Drawing.Size(23, 22);
+			this.deleteSelectionButton.Text = "Delete selected elements";
+			this.deleteSelectionButton.Click += new System.EventHandler(this.deleteSelectionButton_Click);
+			// 
+			// SaveImageModelButton
+			// 
+			this.SaveImageModelButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.SaveImageModelButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveImageModelButton.Image")));
+			this.SaveImageModelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.SaveImageModelButton.Name = "SaveImageModelButton";
+			this.SaveImageModelButton.Size = new System.Drawing.Size(23, 22);
+			this.SaveImageModelButton.Text = "Save image model";
+			this.SaveImageModelButton.Click += new System.EventHandler(this.SaveImageModelButton_Click);
 			// 
 			// viewPort
 			// 
@@ -431,6 +466,16 @@
 			this.viewPort.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseDown);
 			this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseMove);
 			this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseUp);
+			// 
+			// LoadImageModelButton
+			// 
+			this.LoadImageModelButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.LoadImageModelButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadImageModelButton.Image")));
+			this.LoadImageModelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.LoadImageModelButton.Name = "LoadImageModelButton";
+			this.LoadImageModelButton.Size = new System.Drawing.Size(23, 22);
+			this.LoadImageModelButton.Text = "Load image model";
+			this.LoadImageModelButton.Click += new System.EventHandler(this.LoadImageModelButton_Click);
 			// 
 			// MainForm
 			// 
@@ -500,5 +545,10 @@
 		private System.Windows.Forms.ToolStripMenuItem scale_1_5;
 		private System.Windows.Forms.ToolStripMenuItem scale_1;
 		private System.Windows.Forms.ToolStripMenuItem scale_0_5;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripButton SaveImageModelButton;
+		private System.Windows.Forms.ToolStripButton LoadImageModelButton;
 	}
 }

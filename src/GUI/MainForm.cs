@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Draw
 {
@@ -437,6 +441,85 @@ namespace Draw
 			{
 				dialogProcessor.DeleteSelection();
 				viewPort.Invalidate();
+			}
+		}
+
+		private void SaveImageModelButton_Click(object sender, EventArgs e)
+		{
+
+			//dialogProcessor.SaveDrawing("drawing.bin");
+
+			SaveFileDialog saveFileDialog = new SaveFileDialog()
+			{
+				Title = "Load Save File",
+				Filter = "JSON Files (*.json)|*.json|XML Files (*.xml)|*.xml|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*",
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+			}; 
+
+			if(saveFileDialog.ShowDialog() == DialogResult.OK)
+			{
+				try
+				{
+					dialogProcessor.SaveDrawing(saveFileDialog.FileName);
+					MessageBox.Show("File saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+				catch(Exception ex)
+				{
+					MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}	
+		}
+
+		private void LoadImageModelButton_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog
+			{
+				Title = "Load Save File",
+				Filter = "JSON Files (*.json)|*.json|XML Files (*.xml)|*.xml|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*",
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+			};
+
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			{
+
+				dialogProcessor.Selection.Clear();
+				dialogProcessor.ShapeList.Clear();
+				try
+				{
+					//using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open))
+					//{
+					//	BinaryFormatter formatter = new BinaryFormatter();
+					//	dialogProcessor.ShapeList = (LinkedList<Shape>)formatter.Deserialize(fs);
+					//}
+					Shape[] shapes = (Shape[])DeserializeXml(File.ReadAllText(openFileDialog.FileName), typeof(Shape[]));
+
+					foreach (Shape shape in shapes)
+					{
+						dialogProcessor.ShapeList.AddLast(shape);
+					}
+
+					viewPort.Invalidate();
+					MessageBox.Show("File loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+		}
+
+		private object DeserializeXml(string xml, Type type)
+		{
+			Type[] extraTypes = new Type[]
+			{
+				typeof(RectangleShape),
+				typeof(EllipseShape),
+				typeof(GroupShape)
+			};
+			XmlSerializer xmlSerializer = new XmlSerializer(type, extraTypes);
+			using (StringReader stringReader = new StringReader(xml))
+			{
+				return xmlSerializer.Deserialize(stringReader);
 			}
 		}
 	}

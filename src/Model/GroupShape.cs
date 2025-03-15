@@ -10,6 +10,7 @@ namespace Draw
 	/// <summary>
 	/// Класът правоъгълник е основен примитив, който е наследник на базовия Shape.
 	/// </summary>
+	[Serializable]
 	public class GroupShape : Shape
 	{
 		#region Constructor
