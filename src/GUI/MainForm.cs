@@ -464,7 +464,7 @@ namespace Draw
 			SaveFileDialog saveFileDialog = new SaveFileDialog()
 			{
 				Title = "Load Save File",
-				Filter = "JSON Files (*.json)|*.json|XML Files (*.xml)|*.xml|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*",
+				Filter = "XML Files (*.xml)|*.xml|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*",
 				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 			}; 
 
@@ -490,7 +490,7 @@ namespace Draw
 			OpenFileDialog openFileDialog = new OpenFileDialog
 			{
 				Title = "Load Save File",
-				Filter = "JSON Files (*.json)|*.json|XML Files (*.xml)|*.xml|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*",
+				Filter = "XML Files (*.xml)|*.xml|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*",
 				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 			};
 
