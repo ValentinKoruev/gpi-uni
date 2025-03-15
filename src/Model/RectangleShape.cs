@@ -10,7 +10,9 @@ namespace Draw
 	public class RectangleShape : Shape
 	{
 		#region Constructor
-		
+
+		public RectangleShape() { }
+
 		public RectangleShape(RectangleF rect) : base(rect)
 		{
 		}
@@ -52,10 +54,32 @@ namespace Draw
 							Rectangle.Top + (Rectangle.Height / 2)));
 
 				grfx.Transform = m;
+
+				float scaledWidth = Rectangle.Width * Scale;
+				float scaledHeight = Rectangle.Height * Scale;
+
 				grfx.FillRectangle(new SolidBrush(Color.FromArgb(Transparency, FillColor)),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-				grfx.DrawRectangle(new Pen(StrokeColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+				grfx.DrawRectangle(new Pen(StrokeColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height) ;
 				grfx.ResetTransform();
 			}
+		}
+
+		public override Shape Clone() 
+		{
+			return new RectangleShape()
+			{
+				Rectangle = this.Rectangle,
+				FillColor = this.FillColor,
+				StrokeColor = this.StrokeColor,
+				
+				Transparency = this.Transparency,
+				Rotation = this.Rotation,
+				Scale = this.Scale,
+
+				Width = this.Width,
+				Height = this.Height,
+				Location = this.Location,
+			};
 		}
 	}
 }

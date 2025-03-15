@@ -27,6 +27,14 @@ namespace Draw
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
+
+			this.MouseWheel += new MouseEventHandler(this.mainform_MouseWheel);
+			KeyPreview = true;
+		}
+
+		public static int Clamp(int value, int min, int max)
+		{
+			return (value < min) ? min : (value > max) ? max : value;
 		}
 
 		/// <summary>
@@ -72,18 +80,27 @@ namespace Draw
 		void ViewPortMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			if (pickUpSpeedButton.Checked) {
-				Shape selectedShape = dialogProcessor.ContainsPoint(e.Location);
-				if(selectedShape != null)
+
+				if (e.Button == System.Windows.Forms.MouseButtons.Left)
 				{
-					if(dialogProcessor.Selection.Contains(selectedShape))
+					
+				}
+				if (e.Button == System.Windows.Forms.MouseButtons.Right)
+				{
+					Shape selectedShape = dialogProcessor.ContainsPoint(e.Location);
+					if (selectedShape != null)
 					{
-						dialogProcessor.Selection.Remove(selectedShape);
-					}
-					else
-					{
-						dialogProcessor.Selection.Add(selectedShape);
+						if (dialogProcessor.Selection.Contains(selectedShape))
+						{
+							dialogProcessor.Selection.Remove(selectedShape);
+						}
+						else
+						{
+							dialogProcessor.Selection.Add(selectedShape);
+						}
 					}
 				}
+				
 
 				UpdateStatusBar("Последно действие: Селекция на примитив");
 				dialogProcessor.IsDragging = true;
@@ -98,10 +115,14 @@ namespace Draw
 		/// </summary>
 		void ViewPortMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
-			if (dialogProcessor.IsDragging) {
-				if (dialogProcessor.Selection.Count > 0) UpdateStatusBar("Последно действие: Влачене");
-				dialogProcessor.TranslateTo(e.Location);
-				viewPort.Invalidate();
+			if (e.Button == System.Windows.Forms.MouseButtons.Left)
+			{
+				if (dialogProcessor.IsDragging)
+				{
+					if (dialogProcessor.Selection.Count > 0) UpdateStatusBar("Последно действие: Влачене");
+					dialogProcessor.TranslateTo(e.Location);
+					viewPort.Invalidate();
+				}
 			}
 		}
 
@@ -146,11 +167,7 @@ namespace Draw
 
 		private void deleteSelectionButton_Click(object sender, EventArgs e)
 		{
-			foreach (Shape item in dialogProcessor.Selection)
-			{
-				dialogProcessor.ShapeList.Remove(item);
-			}
-			dialogProcessor.Selection.Clear();
+			dialogProcessor.DeleteSelection();
 			viewPort.Invalidate();
 
 			UpdateStatusBar("Последно действие: Изтриване на селекция");
@@ -323,6 +340,104 @@ namespace Draw
 			dialogProcessor.AddGroupFromSelection();
 			viewPort.Invalidate();
 			UpdateStatusBar("Последно действие: Създаване на група");
+		}
+
+		private void ungroupElementsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.UngroupFromSelection();
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Разгрупиране на група");
+		}
+
+		private void DrawSquareButton_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.AddRandomSquare();
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Рисуване на квадрат");
+		}
+
+		#region ChangeScaleButtons
+		private void scale_2_Click(object sender, EventArgs e)
+		{
+			foreach(Shape shape in dialogProcessor.Selection)
+			{
+				dialogProcessor.ChangeScale(2f, shape);
+			}
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Смяна на мащаб");
+		}
+		private void scale_1_5_Click(object sender, EventArgs e)
+		{
+			foreach (Shape shape in dialogProcessor.Selection)
+			{
+				dialogProcessor.ChangeScale(1.5f, shape);
+			}
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Смяна на мащаб");
+		}
+
+		private void scale_1_Click(object sender, EventArgs e)
+		{
+			foreach (Shape shape in dialogProcessor.Selection)
+			{
+				dialogProcessor.ChangeScale(1f, shape);
+			}
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Смяна на мащаб");
+		}
+
+		private void scale_0_5_Click(object sender, EventArgs e)
+		{
+			foreach (Shape shape in dialogProcessor.Selection)
+			{
+				dialogProcessor.ChangeScale(0.5f, shape);
+			}
+			viewPort.Invalidate();
+			UpdateStatusBar("Последно действие: Смяна на мащаб");
+		}
+		#endregion
+		private void mainform_MouseWheel(object sender, MouseEventArgs e)
+		{
+			foreach (Shape shape in dialogProcessor.Selection)
+			{
+				if (ModifierKeys.Equals(Keys.Control | Keys.Shift))
+				{
+					int transparencyFactor = (e.Delta > 0) ? 10 : -10;
+					int transparency = Clamp(shape.Transparency + transparencyFactor, 0, 255);
+					dialogProcessor.ChangeTransparency((byte)transparency, shape);
+					UpdateStatusBar("Последно действие: Смяна на транспарентност");
+				}
+				else if (ModifierKeys.Equals(Keys.Control))
+				{
+					float scale = (e.Delta > 0) ? 1.1f : 0.9f;
+					dialogProcessor.ChangeScale(scale, shape);
+					UpdateStatusBar("Последно действие: Смяна на мащаб");
+				}
+				else if (ModifierKeys.Equals(Keys.Shift))
+				{
+					float rotation = (e.Delta > 0) ? 5f : -5f;
+					dialogProcessor.ChangeRotation(rotation, shape);
+					UpdateStatusBar("Последно действие: Завъртане на селекция");
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			base.OnKeyDown(e);
+
+			if (e.Control && e.KeyCode == Keys.C)
+			{
+				dialogProcessor.CopySelection();
+				viewPort.Invalidate(); 
+			}
+			else if (e.KeyCode == Keys.Delete) 
+			{
+				dialogProcessor.DeleteSelection();
+				viewPort.Invalidate();
+			}
 		}
 	}
 }

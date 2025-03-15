@@ -84,6 +84,22 @@ namespace Draw
 		}
 
 		/// <summary>
+		/// Добавя примитив - квадрат на произволно място върху клиентската област.
+		/// </summary>
+		public void AddRandomSquare()
+		{
+			Random rnd = new Random();
+			int x = rnd.Next(100, 1000);
+			int y = rnd.Next(100, 600);
+
+			RectangleShape rect = new RectangleShape(new Rectangle(x, y, 100, 100));
+			rect.FillColor = Color.White;
+			rect.StrokeColor = Color.Black;
+
+			ShapeList.AddLast(rect);
+		}
+
+		/// <summary>
 		/// Проверява дали дадена точка е в елемента.
 		/// Обхожда в ред обратен на визуализацията с цел намиране на
 		/// "най-горния" елемент т.е. този който виждаме под мишката.
@@ -214,6 +230,19 @@ namespace Draw
 			}
 			shape.Rotation += angle;
 		}
+
+		public void ChangeScale(float scale, Shape shape)
+		{
+			if (shape.GetType() == typeof(GroupShape))
+			{
+				GroupShape group = (GroupShape)shape;
+				foreach (Shape groupItem in group.SubShapes)
+				{
+					groupItem.Resize(scale);
+				}
+			}
+			shape.Resize(scale);
+		}
 		public void AddGroupFromSelection()
 		{
 			List<Shape> shapesToGroup = new List<Shape>();
@@ -233,6 +262,54 @@ namespace Draw
 			}
 
 			ShapeList.AddLast(groupShape);
+			selection.Clear();
+		}
+
+		public void UngroupFromSelection()
+		{
+			foreach(GroupShape groupShape in selection)
+			{
+				ShapeList.Remove(groupShape);
+				foreach(Shape shape in groupShape.SubShapes)
+				{
+					ShapeList.AddLast(shape);
+				}
+			}
+
+			selection.Clear();
+		}
+
+		public void CopySelection()
+		{
+			if (selection.Count == 0)
+				return;
+
+			List<Shape> copiedShapes = new List<Shape>();
+			List<Shape> shapesToBeCopied = new List<Shape>();
+
+			foreach(Shape shape in ShapeList)
+			{
+				if(selection.Contains(shape)) shapesToBeCopied.Add(shape);
+			}
+
+			foreach (Shape shape in shapesToBeCopied)
+			{
+				Shape copiedShape = shape.Clone(); 
+				copiedShape.Offset(10, 10); 
+				copiedShapes.Add(copiedShape);
+				ShapeList.AddLast(copiedShape);
+			}
+
+			selection.Clear();
+			selection.AddRange(copiedShapes);
+		}
+
+		public void DeleteSelection()
+		{
+			foreach (Shape item in selection)
+			{
+				ShapeList.Remove(item);
+			}
 			selection.Clear();
 		}
 	}

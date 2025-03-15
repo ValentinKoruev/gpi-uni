@@ -105,15 +105,26 @@ namespace Draw
 			set { rotation = value; }
 		}
 
+		/// <summary>
+		/// Транспарентност.
+		/// </summary>
+		private float scale = 1f;
+		public virtual float Scale
+		{
+			get { return scale; }
+			set { scale = value; }
+		}
+
+
 		#endregion
 
 
-		/// <summary>
-		/// Проверка дали точка point принадлежи на елемента.
-		/// </summary>
-		/// <param name="point">Точка</param>
-		/// <returns>Връща true, ако точката принадлежи на елемента и
-		/// false, ако не пренадлежи</returns>
+			/// <summary>
+			/// Проверка дали точка point принадлежи на елемента.
+			/// </summary>
+			/// <param name="point">Точка</param>
+			/// <returns>Връща true, ако точката принадлежи на елемента и
+			/// false, ако не пренадлежи</returns>
 		public virtual bool Contains(PointF point)
 		{
 			return Rectangle.Contains(point.X, point.Y);	
@@ -127,6 +138,35 @@ namespace Draw
 		{
 			// shape.Rectangle.Inflate(shape.BorderWidth, shape.BorderWidth);
 		}
-		
+
+
+		/// <summary>
+		/// Оразмерява елемента.
+		/// </summary>
+		/// <param name="grfx">Оразмерява елемента.</param>
+		public virtual void Resize(float scaleFactor)
+		{
+			if (scaleFactor <= 0) return;
+
+			float newWidth = Rectangle.Width * scaleFactor;
+			float newHeight = Rectangle.Height * scaleFactor;
+
+			float deltaX = (newWidth - Rectangle.Width) / 2;
+			float deltaY = (newHeight - Rectangle.Height) / 2;
+
+			Rectangle = new RectangleF(
+				Rectangle.X - deltaX,
+				Rectangle.Y - deltaY,
+				newWidth,
+				newHeight
+			);
+		}
+
+		public abstract Shape Clone();
+
+		public void Offset(float dx, float dy)
+		{
+			Rectangle = new RectangleF(Rectangle.X + dx, Rectangle.Y + dy, Rectangle.Width, Rectangle.Height);
+		}
 	}
 }

@@ -11,6 +11,7 @@ namespace Draw
 	{
 		#region Constructor
 
+		public EllipseShape() { }
 		public EllipseShape(RectangleF rect) : base(rect)
 		{
 		}
@@ -56,6 +57,24 @@ namespace Draw
 				grfx.DrawEllipse(new Pen(StrokeColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 				grfx.ResetTransform();
 			}
+		}
+
+		public override Shape Clone()
+		{
+			return new EllipseShape()
+			{
+				Rectangle = this.Rectangle,
+				FillColor = this.FillColor,
+				StrokeColor = this.StrokeColor,
+
+				Transparency = this.Transparency,
+				Rotation = this.Rotation,
+				Scale = this.Scale,
+
+				Width = this.Width,
+				Height = this.Height,
+				Location = this.Location,
+			};
 		}
 	}
 }

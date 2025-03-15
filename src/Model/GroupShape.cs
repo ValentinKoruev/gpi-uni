@@ -14,6 +14,7 @@ namespace Draw
 	{
 		#region Constructor
 
+		public GroupShape() { }
 		public GroupShape(RectangleF rect) : base(rect)
 		{
 		}
@@ -72,6 +73,25 @@ namespace Draw
 			}
 
 			// grfx.DrawRectangle(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+		}
+
+		public override Shape Clone()
+		{
+			return new GroupShape()
+			{
+				Rectangle = this.Rectangle,
+				FillColor = this.FillColor,
+				StrokeColor = this.StrokeColor,
+
+				Transparency = this.Transparency,
+				Rotation = this.Rotation,
+				Scale = this.Scale,
+
+				Width = this.Width,
+				Height = this.Height,
+				Location = this.Location,
+				SubShapes = new List<Shape>(this.SubShapes)
+			};
 		}
 	}
 }
