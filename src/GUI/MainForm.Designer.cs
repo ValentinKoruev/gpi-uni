@@ -75,8 +75,9 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.colorDialog2 = new System.Windows.Forms.ColorDialog();
 			this.SaveImageModelButton = new System.Windows.Forms.ToolStripButton();
-			this.viewPort = new Draw.DoubleBufferedPanel();
 			this.LoadImageModelButton = new System.Windows.Forms.ToolStripButton();
+			this.viewPort = new Draw.DoubleBufferedPanel();
+			this.ClearButton = new System.Windows.Forms.ToolStripMenuItem();
 			this.mainMenu.SuspendLayout();
 			this.statusBar.SuspendLayout();
 			this.speedMenu.SuspendLayout();
@@ -99,6 +100,7 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ClearButton,
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -107,7 +109,7 @@
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
 			// 
@@ -455,6 +457,16 @@
 			this.SaveImageModelButton.Text = "Save image model";
 			this.SaveImageModelButton.Click += new System.EventHandler(this.SaveImageModelButton_Click);
 			// 
+			// LoadImageModelButton
+			// 
+			this.LoadImageModelButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.LoadImageModelButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadImageModelButton.Image")));
+			this.LoadImageModelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.LoadImageModelButton.Name = "LoadImageModelButton";
+			this.LoadImageModelButton.Size = new System.Drawing.Size(23, 22);
+			this.LoadImageModelButton.Text = "Load image model";
+			this.LoadImageModelButton.Click += new System.EventHandler(this.LoadImageModelButton_Click);
+			// 
 			// viewPort
 			// 
 			this.viewPort.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -467,15 +479,12 @@
 			this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseMove);
 			this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseUp);
 			// 
-			// LoadImageModelButton
+			// ClearButton
 			// 
-			this.LoadImageModelButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.LoadImageModelButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadImageModelButton.Image")));
-			this.LoadImageModelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.LoadImageModelButton.Name = "LoadImageModelButton";
-			this.LoadImageModelButton.Size = new System.Drawing.Size(23, 22);
-			this.LoadImageModelButton.Text = "Load image model";
-			this.LoadImageModelButton.Click += new System.EventHandler(this.LoadImageModelButton_Click);
+			this.ClearButton.Name = "ClearButton";
+			this.ClearButton.Size = new System.Drawing.Size(180, 22);
+			this.ClearButton.Text = "Clear";
+			this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
 			// 
 			// MainForm
 			// 
@@ -550,5 +559,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton SaveImageModelButton;
 		private System.Windows.Forms.ToolStripButton LoadImageModelButton;
+		private System.Windows.Forms.ToolStripMenuItem ClearButton;
 	}
 }

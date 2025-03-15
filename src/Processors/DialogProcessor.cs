@@ -377,6 +377,34 @@ namespace Draw
 
 		public void LoadDrawing(string filePath) 
 		{
+			switch(FindFileType(filePath))
+			{
+				case ModelFileType.BIN:
+				{
+					using (FileStream fs = new FileStream(filePath, FileMode.Open))
+					{
+						BinaryFormatter formatter = new BinaryFormatter();
+						ShapeList = (LinkedList<Shape>)formatter.Deserialize(fs);
+					}
+					break;
+				}
+				case ModelFileType.XML:
+				{
+					Shape[] shapes = (Shape[])DeserializeXml(File.ReadAllText(filePath), typeof(Shape[]));
+
+					ShapeList.Clear();
+					Selection.Clear();
+					foreach (Shape shape in shapes)
+					{
+						ShapeList.AddLast(shape);
+					}
+					break;
+				}
+				default:
+				{
+					throw new Exception("File type not supported.");
+				}
+			}
 		}
 
 		public static string SerializeXml(object obj)
@@ -392,6 +420,21 @@ namespace Draw
 			{
 				xmlSerializer.Serialize(stringWriter, obj);
 				return stringWriter.ToString();
+			}
+		}
+
+		private object DeserializeXml(string xml, Type type)
+		{
+			Type[] extraTypes = new Type[]
+			{
+				typeof(RectangleShape),
+				typeof(EllipseShape),
+				typeof(GroupShape)
+			};
+			XmlSerializer xmlSerializer = new XmlSerializer(type, extraTypes);
+			using (StringReader stringReader = new StringReader(xml))
+			{
+				return xmlSerializer.Deserialize(stringReader);
 			}
 		}
 	}

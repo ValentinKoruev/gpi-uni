@@ -481,22 +481,9 @@ namespace Draw
 
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
-
-				dialogProcessor.Selection.Clear();
-				dialogProcessor.ShapeList.Clear();
 				try
 				{
-					//using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open))
-					//{
-					//	BinaryFormatter formatter = new BinaryFormatter();
-					//	dialogProcessor.ShapeList = (LinkedList<Shape>)formatter.Deserialize(fs);
-					//}
-					Shape[] shapes = (Shape[])DeserializeXml(File.ReadAllText(openFileDialog.FileName), typeof(Shape[]));
-
-					foreach (Shape shape in shapes)
-					{
-						dialogProcessor.ShapeList.AddLast(shape);
-					}
+					dialogProcessor.LoadDrawing(openFileDialog.FileName);
 
 					viewPort.Invalidate();
 					MessageBox.Show("File loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -508,19 +495,11 @@ namespace Draw
 			}
 		}
 
-		private object DeserializeXml(string xml, Type type)
+		private void ClearButton_Click(object sender, EventArgs e)
 		{
-			Type[] extraTypes = new Type[]
-			{
-				typeof(RectangleShape),
-				typeof(EllipseShape),
-				typeof(GroupShape)
-			};
-			XmlSerializer xmlSerializer = new XmlSerializer(type, extraTypes);
-			using (StringReader stringReader = new StringReader(xml))
-			{
-				return xmlSerializer.Deserialize(stringReader);
-			}
+			dialogProcessor.ShapeList.Clear();
+			dialogProcessor.Selection.Clear();
+			viewPort.Invalidate();
 		}
 	}
 }
